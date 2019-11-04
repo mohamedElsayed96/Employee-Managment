@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { query } from '@angular/core/src/render3/query';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  queryParams: Params;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.queryParams = this.route.snapshot.queryParams;
+    this.route.queryParams.subscribe((query: Params)=>
+    {
+      this.queryParams = query;
+    })
   }
 
 }

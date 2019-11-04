@@ -1,5 +1,5 @@
  
-<ul class="list-group" *ngIf="employees.length > 0"> 
+<ul class="list-group" > 
     <li  *ngFor="let employee of employees; let i = index"
     [routerLink]='[employee.id]' 
     [queryParams]= "queryParams"
@@ -13,9 +13,15 @@
     <li class="list-group-item " style="cursor: pointer;">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" >Previous</a></li>
-              <li class="page-item"><a class="page-link" >{{employeeService.PageNumber}}</a></li>
-              <li class="page-item"><a class="page-link" >Next</a></li>
+              <li class="page-item"><button class="btn btn-primary" type="button" [disabled]="employeeService.PageNumber <= 1"  (click)='onPageDown()'>Previous</button></li>
+              <li class="page-item"><button class="page-link" >{{employeeService.PageNumber}}</button></li>
+              <li class="page-item"><button class="btn btn-primary"  type="button" [disabled]="employees.length <= 0"  (click)='onPageUp()'>Next</button></li>
+                <li class="page-item">
+                    <div class="form-group-lg form-inline">
+                        <input type="number" class="form-control" [ngModel]="employeeService.pageSize" name='page_size'  pattern="^[1-9]+$" #page_size="ngModel">
+                        <button type="button" class="btn-danger btn-sm" (click)="onChangePageSize(page_size.value)" [disabled]="!page_size.valid">Change Page Size</button>
+                    </div>
+                </li>     
             </ul>
         </nav>
     </li>

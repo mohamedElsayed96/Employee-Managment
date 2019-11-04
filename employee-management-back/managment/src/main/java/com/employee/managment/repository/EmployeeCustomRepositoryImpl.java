@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.employee.managment.entity.Employee;
@@ -18,7 +19,7 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 	@PersistenceContext
     private EntityManager entityManager;
 	@Override
-	public List<Employee> search(Map<String, String> searchParams) {
+	public List<Employee> search(Map<String, String> searchParams, Pageable page) {
 
 		StringBuilder q = new StringBuilder("select e from Employee e where");
 		int count = 0;
@@ -33,6 +34,10 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 		}
 		System.out.println(q);
 		Query query = entityManager.createQuery(q.toString());
+		query.setFirstResult(page.getPageNumber() * page.getPageSize());
+		query.setMaxResults(page.getPageSize());
+
+		
 		return query.getResultList();
 	}
 

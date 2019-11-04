@@ -12,7 +12,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class EmployeeListComponent implements OnInit, AfterViewInit {
 
   employees : Employee[]  = [];
-  queryParams : {};
+  queryParams : Params;
   
   constructor(private employeeService: EmployeeService , private router: Router, private route: ActivatedRoute ) { }
 
@@ -23,8 +23,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
       this.employees = data.body;
       if(this.employees.length > 0){
          const id = this.employees[0].id;
-        //  this.queryParams['page_num'] = this.employeeService.PageNumber;
-         this.router.navigate([id], {relativeTo: this.route, queryParams: this.queryParams});
+         this.queryParams = {'page_num':this.employeeService.PageNumber, 'page_size': this.employeeService.pageSize };
+         this.router.navigate([id], {relativeTo: this.route, queryParams: this.queryParams, queryParamsHandling: 'merge'});
       }
      }))
     var self = this;
@@ -51,6 +51,23 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
 
   }
 
-  
+  onPageUp()
+  {
+    this.employeeService.PageNumber++;
+    this.router.navigate(['./'],{relativeTo: this.route, queryParams: {'page_num': this.employeeService.PageNumber}, queryParamsHandling:'merge'})
+  }
+  onPageDown()
+  {
+    this.employeeService.PageNumber > 0? this.employeeService.PageNumber-- : this.employeeService.PageNumber ;
+    this.router.navigate([],{relativeTo: this.route, queryParams: 
+      {'page_num': this.employeeService.PageNumber}, queryParamsHandling:'merge'})
+
+  }
+  onChangePageSize(page_size: number)
+  {
+    this.employeeService.pageSize = page_size;
+    this.router.navigate([],{relativeTo: this.route, queryParams: 
+      {'page_size': this.employeeService.pageSize}, queryParamsHandling:'merge'});
+  }
 
 }

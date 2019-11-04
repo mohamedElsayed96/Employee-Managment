@@ -18,25 +18,22 @@ export class EmployeesComponent implements OnInit {
   }
   onSubmit()
   {
-    const obj = this.form.value
-    const searchObj = {};
-    
-    for (let index = 0; index < Object.keys(obj).length; index++) {
-      const key = Object.keys(obj)[index];
-      if(obj[key] != "")
-      {
-        searchObj[key]= obj[key];
-      }
+      const obj = this.form.value
+      const searchObj = {};
       
-    }
+      for (let index = 0; index < Object.keys(obj).length; index++) {
+        const key = Object.keys(obj)[index];
+        if(obj[key] != "")
+        {
+          searchObj[key]= obj[key];
+        }
+      }
+      this.employeeService.PageNumber = 1;
+      searchObj['page_num'] = this.employeeService.PageNumber;
+      searchObj['page_size'] = this.employeeService.pageSize;
 
-    this.router.navigate(['./'], {relativeTo: this.route , queryParams: searchObj});
-    
-    
-    
 
-  
-
+      this.router.navigate([], {relativeTo: this.route , queryParams: searchObj});
   }
 
   onNewEmployee()

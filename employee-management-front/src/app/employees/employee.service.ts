@@ -7,7 +7,8 @@ import { Employee } from "./employee.model";
 export class EmployeeService
 {
     constructor(private http: HttpClient){}
-    PageNumber: number = 0;
+    PageNumber: number = 1;
+    pageSize: number = 5;
 
     getEmployees(queryParams: {})
     {

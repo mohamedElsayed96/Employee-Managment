@@ -36,8 +36,21 @@ public class EmployeeController {
 	public ResponseEntity<?> getEmployees(@RequestParam Map<String,String> allRequestParams)//, @RequestParam(required = false) String name, @RequestParam(required = false) String mobile_number,
 //			@RequestParam(required = false) String hr_code,  @RequestParam(required = false) String email)
 	{
-		System.out.println(allRequestParams.entrySet().size());
-		List<Employee> employees = employeeService.findAll(allRequestParams, 0, 5);
+		int page_num = 1;
+		int page_size = 5;
+		
+		try {
+			String pageNum = allRequestParams.get("page_num");
+			String pageSize = allRequestParams.get("page_size");
+			page_num = Integer.parseInt(pageNum);
+			page_size = Integer.parseInt(pageSize);
+			allRequestParams.remove("page_num");
+			allRequestParams.remove("page_size");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		List<Employee> employees = employeeService.findAll(allRequestParams, page_num, page_size);
 		return ResponseEntity.status(200).body(employees);
 	}
 	@GetMapping("/employees/{id}")

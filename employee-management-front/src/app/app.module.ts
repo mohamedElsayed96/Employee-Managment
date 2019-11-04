@@ -10,6 +10,7 @@ import { EmployeeAddComponent } from './employees/employee-add/employee-add.comp
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeService } from './employees/employee.service';
 import { HeaderComponent } from './header/header.component';
+import { DropdownDirectiveDirective } from './Shared/dropdown-directive.directive';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
     EmployeeDetailComponent,
     EmployeeAddComponent,
     HeaderComponent,
+    DropdownDirectiveDirective,
     
   ],
   imports: [
