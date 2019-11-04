@@ -1,0 +1,7 @@
+/* .row{
+    display: flex;
+    align-items: flex-end;
+}
+div[class*="col-"]{
+  margin-bottom: 0px !important;
+} */

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-lg-8">
+        <form (ngSubmit)='onAdd()' #f='ngForm'>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" name="name" class="form-control" ngModel required id='name'>
+              </div>
+              <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="text" name="email" class="form-control" ngModel email required id='email'>
+            </div>
+              <div class="form-group">
+                  <label for="mobile_number">Mobile Number:</label>
+                  <input type="text" name="mobile_number" pattern="^[0-9]*$" class="form-control" ngModel required id='mobile_number'>
+            </div>
+            <div class="form-group">
+                <label for="hr_code">Hr Code:</label>
+                <input type="text" name="hr_code" class="form-control"  ngModel required id='hr_code'>
+            </div>
+            <button type="submit" class="btn btn-primary   btn-lg" style="margin-right: 3px;" [disabled]='!f.valid'> Add </button>
+            <button type="button" class="btn btn-secondary  btn-lg" (click)="f.reset()"> Clear </button>
+
+          </form>
+    </div>
+  </div>
+</div>
+  

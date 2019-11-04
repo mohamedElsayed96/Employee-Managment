@@ -1,0 +1,22 @@
+ 
+<ul class="list-group" *ngIf="employees.length > 0"> 
+    <li  *ngFor="let employee of employees; let i = index"
+    [routerLink]='[employee.id]' 
+    [queryParams]= "queryParams"
+    routerLinkActive = 'active'
+      
+    class="list-group-item " style="cursor: pointer;"    
+        >
+        <p> <strong>{{employee.hr_code}}</strong></p>
+        <p>name: {{employee.name}} </p>
+    </li>
+    <li class="list-group-item " style="cursor: pointer;">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" >Previous</a></li>
+              <li class="page-item"><a class="page-link" >{{employeeService.PageNumber}}</a></li>
+              <li class="page-item"><a class="page-link" >Next</a></li>
+            </ul>
+        </nav>
+    </li>
+  </ul>
