@@ -37,14 +37,19 @@ public class EmployeeController {
 //			@RequestParam(required = false) String hr_code,  @RequestParam(required = false) String email)
 	{
 		int page_num = 1;
-		int page_size = 5;
+		int page_size = 0;
 		
 		try {
 			String pageNum = allRequestParams.get("page_num");
-			String pageSize = allRequestParams.get("page_size");
 			page_num = Integer.parseInt(pageNum);
-			page_size = Integer.parseInt(pageSize);
 			allRequestParams.remove("page_num");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		try {
+			String pageSize = allRequestParams.get("page_size");
+			page_size = Integer.parseInt(pageSize);
 			allRequestParams.remove("page_size");
 
 		} catch (Exception e) {

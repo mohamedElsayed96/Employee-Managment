@@ -18,7 +18,7 @@
               <li class="page-item"><button class="btn btn-primary"  type="button" [disabled]="employees.length <= 0"  (click)='onPageUp()'>Next</button></li>
                 <li class="page-item">
                     <div class="form-group-lg form-inline">
-                        <input type="number" class="form-control" [ngModel]="employeeService.pageSize" name='page_size'  pattern="^[1-9]+$" #page_size="ngModel">
+                        <input type="number" class="form-control" [ngModel]="employeeService.pageSize" name='page_size'  pattern="^[0-9]+[0-9]*$" #page_size="ngModel">
                         <button type="button" class="btn-danger btn-sm" (click)="onChangePageSize(page_size.value)" [disabled]="!page_size.valid">Change Page Size</button>
                     </div>
                 </li>     

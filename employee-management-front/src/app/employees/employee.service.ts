@@ -8,7 +8,7 @@ export class EmployeeService
 {
     constructor(private http: HttpClient){}
     PageNumber: number = 1;
-    pageSize: number = 5;
+    pageSize: number = 0;
 
     getEmployees(queryParams: {})
     {

@@ -28,16 +28,22 @@ public class EmployeeService {
 		
 		
 //		System.out.println("page number" + pageNum);
-		Pageable pag = PageRequest.of(pageNum - 1, pageSize);
-		if(searchParams.size() <= 0) {
+		if(searchParams.size() <= 0 )
+		{
+			if(pageSize <= 0)
+			{
+				return employeeRepository.findAll();
+
+			}
 			
+			Pageable pag = PageRequest.of(pageNum - 1, pageSize);
 			return employeeRepository.findAll(pag).toList();
 		}
 		else
 		{
 
 		
-			List<Employee> emps = employeeRepository.search(searchParams, pag);
+			List<Employee> emps = employeeRepository.search(searchParams, pageSize, pageNum);
 			return emps;
 		}
 	}

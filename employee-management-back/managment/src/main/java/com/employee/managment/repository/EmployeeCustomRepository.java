@@ -8,6 +8,6 @@ import org.springframework.data.domain.Pageable;
 import com.employee.managment.entity.Employee;
 
 public interface EmployeeCustomRepository {
-	List<Employee> search(Map<String, String> searchParams, Pageable page);
+	List<Employee> search(Map<String, String> searchParams, int page_size, int page_number);
 
 }
