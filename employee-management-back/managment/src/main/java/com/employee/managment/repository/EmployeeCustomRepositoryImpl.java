@@ -37,11 +37,13 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 		}
 		System.out.println(q);
 		Query query = entityManager.createQuery(q.toString());
-		if(page_size <= 0)
+		if(page_size > 0)
 		{
+			page_number--;
 			query.setFirstResult(page_number * page_size);
 			query.setMaxResults(page_size);
 		}
+		
 
 		
 		return query.getResultList();

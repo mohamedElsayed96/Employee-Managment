@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EmployeeService } from './employees/employee.service';
 import { HeaderComponent } from './header/header.component';
 import { DropdownDirectiveDirective } from './Shared/dropdown-directive.directive';
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the moduleimport {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { DropdownDirectiveDirective } from './Shared/dropdown-directive.directiv
     BrowserModule,
     FormsModule, 
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
 
   ],
   providers: [EmployeeService],
