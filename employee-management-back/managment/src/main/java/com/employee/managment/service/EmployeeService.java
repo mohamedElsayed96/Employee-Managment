@@ -23,28 +23,29 @@ public class EmployeeService {
 	private EmployeeRepository employeeRepository;
 	
 	
-	public List<Employee> findAll(Map<String,String> searchParams, int pageNum, int pageSize) 
+	public Page<Employee> findAll(Map<String,String> searchParams, long[] size, int pageNum, int pageSize) 
 	{
 		
 		
+		pageNum--;
 //		System.out.println("page number" + pageNum);
+		Pageable pag = PageRequest.of(pageNum, pageSize);
 		if(searchParams.size() <= 0 )
 		{
-			if(pageSize <= 0)
-			{
-				return employeeRepository.findAll();
-
-			}
+			Page<Employee> emps = employeeRepository.findAll(pag);
+			size[0]  = emps.getTotalElements();
 			
-			Pageable pag = PageRequest.of(pageNum - 1, pageSize);
-			return employeeRepository.findAll(pag).toList();
+			return emps;
 		}
 		else
 		{
 
 		
-			List<Employee> emps = employeeRepository.search(searchParams, pageSize, pageNum);
-			return emps;
+			List<Employee> emps = employeeRepository.search(searchParams, size , pag);
+			int startIndex = pageNum * pageSize;
+			int endIndex = startIndex + pageSize  > emps.size() ? emps.size(): startIndex + pageSize;
+			Page<Employee> ems = new PageImpl<Employee>(emps.subList(startIndex, endIndex), pag, emps.size());
+			return ems;
 		}
 	}
 	public Employee find(int id) 

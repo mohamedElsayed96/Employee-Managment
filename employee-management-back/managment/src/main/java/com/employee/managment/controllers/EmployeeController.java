@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -26,7 +27,7 @@ import com.employee.managment.entity.Employee;
 import com.employee.managment.service.EmployeeService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(allowedHeaders = {"size"}, exposedHeaders = {"size"})
 public class EmployeeController {
 	
 	@Autowired
@@ -37,7 +38,7 @@ public class EmployeeController {
 //			@RequestParam(required = false) String hr_code,  @RequestParam(required = false) String email)
 	{
 		int page_num = 1;
-		int page_size = 0;
+		int page_size = 5;
 		
 		try {
 			String pageNum = allRequestParams.get("page_num");
@@ -55,8 +56,9 @@ public class EmployeeController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		List<Employee> employees = employeeService.findAll(allRequestParams, page_num, page_size);
-		return ResponseEntity.status(200).body(employees);
+		long[] size = new long[1];
+		Page<Employee> employees = employeeService.findAll(allRequestParams, size ,page_num, page_size);
+		return ResponseEntity.status(200).header("size", String.valueOf(size[0]) ).body(employees);
 	}
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<?> getEmployee(@PathVariable int id)

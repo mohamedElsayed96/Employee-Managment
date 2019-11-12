@@ -20,7 +20,7 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 	@PersistenceContext
     private EntityManager entityManager;
 	@Override
-	public List<Employee> search(Map<String, String> searchParams, int page_size, int page_number) {
+	public List<Employee> search(Map<String, String> searchParams, long[] size ,Pageable pag) {
 
 		
 
@@ -29,7 +29,7 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 		for(Entry<String, String> entry  : searchParams.entrySet()) 
 		{
 			
-			q.append(" e." + entry.getKey()+"='"+entry.getValue()+"'");
+			q.append(" e." + entry.getKey()+" like '"+entry.getValue()+"%'");
 			if(count < searchParams.size() - 1)
 				q.append(" and");
 			count++;
@@ -37,13 +37,14 @@ public class EmployeeCustomRepositoryImpl implements EmployeeCustomRepository {
 		}
 		System.out.println(q);
 		Query query = entityManager.createQuery(q.toString());
-		if(page_size > 0)
-		{
-			page_number--;
-			query.setFirstResult(page_number * page_size);
-			query.setMaxResults(page_size);
-		}
 		
+			
+//		query.setFirstResult(pag.getPageNumber() * pag.getPageSize());
+//		query.setMaxResults(pag.getPageSize());
+//		
+		Query que = entityManager.createQuery(q.toString());
+		
+		size[0] = que.getResultList().size();
 
 		
 		return query.getResultList();

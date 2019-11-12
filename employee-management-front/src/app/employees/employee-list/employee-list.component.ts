@@ -19,30 +19,36 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   
   ngOnInit() {
     this.queryParams = this.route.snapshot.queryParams;
+
     this.employeeService.getEmployees(this.queryParams).subscribe(((data : HttpResponse<Employee[]>)=>
     { 
       this.employees = data.body;
       if(this.employees.length > 0){
          const id = this.employees[0].id;
-         this.  queryParams['page_num'] = this.employeeService.PageNumber;
-         this.  queryParams['page_size'] = this.employeeService.pageSize ;
+         if(!this.queryParams['page_num'])
+            this.queryParams['page_num'] = this.employeeService.PageNumber;
+         if(!this.queryParams['page_size'])
+            this.queryParams['page_size'] = this.employeeService.pageSize ;
          this.router.navigate([id], {relativeTo: this.route, queryParams: this.queryParams, queryParamsHandling: 'merge'});
       }
      }))
-    var self = this;
+  
     this.route.queryParams.subscribe((queryParams)=>
     {
-      console.log(this.route.firstChild);
       
 
         this.queryParams = queryParams;
-        this.employeeService.getEmployees(queryParams).subscribe(((data : HttpResponse<Employee[]>)=>
+        this.employeeService.getEmployees(queryParams).subscribe(((data : HttpResponse<any[]>)=>
         { 
-          this.employees = data.body;
+          this.employees = data.body['content'];
+          const total :number = +data.headers.get('size');
+          this.employeeService.resultCount = data.body['totalElements'];
+          console.log(data.headers);
           if(this.employees.length > 0){
             const id = this.employees[0].id;
             this.router.navigate([id], {relativeTo: this.route, queryParams: this.queryParams});
-          }else
+          }
+          else
           {
             this.router.navigate(['/employees'], {relativeTo: this.route, queryParams: this.queryParams});
           }
@@ -59,7 +65,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   onPageUp()
   {
     this.employeeService.PageNumber++;
-    this.router.navigate(['./'],{relativeTo: this.route, queryParams: {'page_num': this.employeeService.PageNumber}, queryParamsHandling:'merge'})
+    this.router.navigate([],{relativeTo: this.route, queryParams: {'page_num': this.employeeService.PageNumber}, queryParamsHandling:'merge'})
   }
   onPageDown()
   {
@@ -70,11 +76,10 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   }
   onChangePageSize(event: number)
   {
-    console.log(event);
     
-    this.employeeService.pageSize = event;
-    this.router.navigate([],{relativeTo: this.route, queryParams: 
-      {'page_size': this.employeeService.pageSize}, queryParamsHandling:'merge'});
+    this.employeeService.PageNumber = event;
+    this.router.navigate([],{ relativeTo: this.route, queryParams: 
+      {'page_num': this.employeeService.PageNumber}, queryParamsHandling:'merge'});
   }
 
 }

@@ -1,8 +1,9 @@
  
 <ul class="list-group" > 
-    <!-- <li  *ngFor="let employee of employees | paginate: { itemsPerPage: employeeService.pageSize, currentPage: employeeService.PageNumber  }"
+    <li  *ngFor="let employee of employees | paginate: { itemsPerPage: employeeService.pageSize, currentPage: employeeService.PageNumber, totalItems: employeeService.resultCount  }"
     [routerLink]='[employee.id]' 
     [queryParams]= "queryParams"
+    queryParamsHandling='merge'
     routerLinkActive = 'active' 
       
     class="list-group-item " style="cursor: pointer;"    
@@ -10,8 +11,12 @@
         <p> <strong>{{employee.hr_code}}</strong></p>
         <p>name: {{employee.name}} </p>
     </li> 
-    <pagination-controls (pageChange)="onChangePageSize($event)"></pagination-controls>-->
-    <li  *ngFor="let employee of employees"
+    <pagination-controls 
+    previousLabel=""
+    nextLabel=""
+    [responsive]='true'
+    (pageChange)="onChangePageSize($event)"></pagination-controls>
+    <!-- <li  *ngFor="let employee of employees"
     [routerLink]='[employee.id]' 
     [queryParams]= "queryParams"
     queryParamsHandling='merge'
@@ -25,8 +30,8 @@
     <li class="list-group-item " style="cursor: pointer;">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-              <li class="page-item"><button class="btn btn-primary" type="button" [disabled]="employeeService.PageNumber <= 1"  (click)='onPageDown()'>Previous</button></li>
-              <li class="page-item"><button class="page-link" >{{employeeService.PageNumber}}</button></li>
+              <li class="page-item"><button class="btn btn-primary" type="button" [disabled]="employeeService.PageNumber? employeeService.PageNumber <= 1 : true"  (click)='onPageDown()'>Previous</button></li>
+              <li class="page-item"><button class="page-link" >{{employeeService.PageNumber? employeeService.PageNumber : ''}}</button></li>
               <li class="page-item"><button class="btn btn-primary"  type="button" [disabled]="employees.length <= 0 || employeeService.pageSize ===0 "  (click)='onPageUp()'>Next</button></li>
                 <li class="page-item">
                     <div class="form-group-lg form-inline">
@@ -36,5 +41,5 @@
                 </li>     
             </ul>
         </nav>
-    </li>
+    </li> -->
   </ul>
