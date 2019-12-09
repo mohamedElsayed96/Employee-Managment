@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                bat 'cd employee-management-back &&  mvn install'
+                bat 'cd employee-management-back\\managment && mvn install'
             }
         }
         stage('Test') {
