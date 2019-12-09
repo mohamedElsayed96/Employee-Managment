@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { node { label 'master' } }
 
     stages {
         stage('Build') {
@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                
+
             }
         }
         stage('Deploy') {
