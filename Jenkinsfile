@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                bat 'ipconfig'
+                bat 'mvn install -f ./employee-management-back/pom.xml'
             }
         }
         stage('Test') {
