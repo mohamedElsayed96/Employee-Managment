@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                bat 'mvn install -f ./employee-management-back/pom.xml'
+                bat 'cd employee-management-back &&  mvn install'
             }
         }
         stage('Test') {
